@@ -17,7 +17,7 @@ bool Frame3::parseHeader() {
     ulong number_of_length_bytes = setLength([this](ulong &count) {
                                                 return this->getb(count);
                                             });
-    qDebug() << "Frame3: length is set, length =" << length << endl;
+    qDebug() << "Frame3: length is set, length =" << length << Qt::endl;
     ulong extra_data_size = 0, number_of_flag_bytes = 0;
 
     dataLength = length;
@@ -53,7 +53,7 @@ bool Frame3::parseHeader() {
 
     dataLength -= extra_data_size;
 
-    qDebug() << "Frame3: header is successfully parsed, length is" << length << endl;
+    qDebug() << "Frame3: header is successfully parsed, length is" << length << Qt::endl;
     return true;
 }
 

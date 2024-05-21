@@ -7,7 +7,7 @@
 #include <QByteArray>
 #include <QString>
 #include <QHash>
-#include "QtZlib/zlib.h"
+#include <zlib.h>
 #include <functional>
 #include <type_traits>
 //#define QT_NO_DEBUG_OUTPUT

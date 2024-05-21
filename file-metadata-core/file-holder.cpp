@@ -110,7 +110,7 @@ void FileHolder::shift(long long offset) const {
 }
 
 bool FileHolder::parse() {
-    qDebug() << "FileHolder: starting to parse" << endl;
+    qDebug() << "FileHolder: starting to parse" << Qt::endl;
     if (parseHeader())
         return parseData();
     else

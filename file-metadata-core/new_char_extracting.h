@@ -138,13 +138,13 @@ ByteOrder extr::getBOM(std::function<uchar()> gc, bool unsynch, std::function<vo
 template <typename T, class>//unsynch
 QString extr::getEncodingDependentString(std::function<T()> gc, bool unsynch, std::function<void(void)> back, ulong len, TagVersion v) {
     if (unsynch) {
-        qDebug() << "extr, getEncodingDependentString: getting with unsynch, length =" << len << "version is" << v + 2 << endl;
+        qDebug() << "extr, getEncodingDependentString: getting with unsynch, length =" << len << "version is" << v + 2 << Qt::endl;
         ulong spentOnCheck = 0;
         bool correctMark = true;
         qDebug() << "extr, getEncodingDependentString: calling getFunction\n";
         std::function<QChar(ulong&)> getqc = extr::getFunction(gc, unsynch, back, v, correctMark, spentOnCheck);
         if (correctMark) {
-            qDebug() << "extr: got correct mark, calling getqString, length =" << len - spentOnCheck << endl;
+            qDebug() << "extr: got correct mark, calling getqString, length =" << len - spentOnCheck << Qt::endl;
             return extr::getqString(getqc,len - spentOnCheck);
         }
         else {
@@ -160,7 +160,7 @@ QString extr::getEncodingDependentString(std::function<T()> gc, bool unsynch, st
 
 template <typename T, class>//no unsynch
 QString extr::getEncodingDependentString(std::function<T()> gc, ulong len, TagVersion v) {
-    qDebug() << "extr: called encoding dependent strint with no unsynch, length =" << len << ", version is" << v + 2 << endl;
+    qDebug() << "extr: called encoding dependent strint with no unsynch, length =" << len << ", version is" << v + 2 << Qt::endl;
     ulong spentOnCheck = 0;
     bool correctMark = true;
     std::function<QChar(ulong&)> getqc = extr::getFunction(gc, v, correctMark,spentOnCheck);
@@ -376,7 +376,7 @@ template <typename T, class>//V3 no unsynch
 std::function<QChar(ulong&)> extr::getFunctionV3(std::function<T()> gc, bool &correct, ulong &count) {
     qDebug() << "getFunction, V3: called with no unsynch\n";
     T mark = gc();
-    qDebug() << "getFunction, V3, no unsynch: got mark =" << int(mark) << endl;
+    qDebug() << "getFunction, V3, no unsynch: got mark =" << int(mark) << Qt::endl;
     ++count;
     std::function<uchar()> _uchar = [gc] {
         return toUchar(gc());
@@ -423,7 +423,7 @@ std::function<QChar(ulong&)> extr::getFunctionV3(std::function<T()> gc, bool &co
 template <typename T, class>//V4 no unsynch
 std::function<QChar(ulong&)> extr::getFunctionV4(std::function<T()> gc, bool &correct, ulong &count) {
     T mark = gc();
-    qDebug() << "getFunctionV4 with no unsynch: mark =" << int(mark) << endl;
+    qDebug() << "getFunctionV4 with no unsynch: mark =" << int(mark) << Qt::endl;
     ++count;
     std::function<uchar()> _uchar = [gc] {
         return toUchar(gc());
@@ -562,7 +562,7 @@ std::function<QChar(ulong&)> extr::getFunctionV4(std::function<T()> gc, bool uns
                             std::function<void()> back, bool &correct, ulong &count) {
     if (unsynch) {
         T mark = extr::getUns(gc, unsynch, back, count);
-        qDebug() << "getFunctionV4 with unsynch, mark =" << int(mark) << endl;
+        qDebug() << "getFunctionV4 with unsynch, mark =" << int(mark) << Qt::endl;
         std::function<uchar()> _uchar = [gc] {
             return toUchar(gc());
         };
