@@ -2,8 +2,18 @@ QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = file-metadata-core
+TARGET = id3reader
 TEMPLATE = app
+
+CONFIG(debug, debug|release) {
+    DESTDIR = $$PWD/../debug
+} else {
+    DESTDIR = $$PWD/../release
+    unix:{
+        QMAKE_LFLAGS_RPATH=
+        QMAKE_LFLAGS += "-Wl,-rpath,\'\$$ORIGIN/libs\'"
+    }
+}
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -43,7 +53,8 @@ HEADERS += \
     global_constants.h \
     widget.h \
     global_functions.h \
-    debugfile.h
+    debugfile.h \
+    widget1.h
 
 SOURCES += \
         main.cpp \
@@ -74,15 +85,10 @@ SOURCES += \
     frameparser.cpp \
     widget.cpp \
     global_functions.cpp \
-    debugfile.cpp
+    debugfile.cpp \
+    widget1.cpp
 
 FORMS += \
     widget.ui
 
 LIBS += -lz
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-

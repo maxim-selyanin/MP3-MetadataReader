@@ -1,5 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include <QFileDialog>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -7,8 +8,10 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     setAcceptDrops(true);
-    ui->textEdit->setPlainText("Перетащите иконку аудиофайла в это поле\n\
-Для успешной работы окно должно быть активным в момент перетаскивания");
+
+    QFileDialog *d = new QFileDialog(this);
+    connect(d, &QFileDialog::fileSelected, this, &Widget::parseFile);
+    d->exec();
 }
 
 Widget::~Widget() {
@@ -19,11 +22,16 @@ void Widget::dragEnterEvent(QDragEnterEvent *e) {
     qDebug() << "dragEnterEvent\n";
     if (e->mimeData()->hasText()) {
         qDebug() << "Widget: got path\n";
-        parseFile(e->mimeData()->text().remove(0,8));
+        parseFile(e->mimeData()->text().remove(0,7));
     }
     else {
         qDebug() << "no text\n";
     }
+}
+
+void Widget::dropEvent(QDropEvent *)
+{
+    qDebug() << "aa";
 }
 
 void Widget::parseFile(const QString &path) {
